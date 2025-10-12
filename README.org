@@ -1,4 +1,4 @@
-#+title: Tass API Gen
+#+title: Tass API Scraper System
 
 * Parsing TASS APIs
 - tass github: https://github.com/TheAlphaSchoolSystemPTYLTD
