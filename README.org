@@ -1,0 +1,90 @@
+#+title: Tass API Gen
+
+* Parsing TASS APIs
+- tass github: https://github.com/TheAlphaSchoolSystemPTYLTD
+- each repo relates to an api license/scope
+- in each repo, there is a .md file for each method that can be called
+  - they could also have version2/ and version1/ folders,
+    corresponding to older apis, these can be ignored for
+    now
+- each method name is <action><resource> eg.
+  - getStudents
+  - addEmployee
+  - setEmployeeDataUploadUtility
+  
+- in each method.md there are the following sections
+  - version history - a list of changes
+  - version - the api version used (usually 3)
+  - permission - the perms the caller's scope will need
+  - method - almost always ~GET | POST~
+  - params
+    - reqiured
+    - optional
+    - conditional
+  - success response - mostly but not always actually what is returned
+    on success, definitely not enough to always correctly infer types
+  - error response - the api's possible/probably err returns
+  - Sample params, get, and post
+    
+** Parsing logic
+#+begin_src python
+for each repo:
+    get scope name
+
+    for each .md file excluding README.md:
+        parse name
+        parse version
+        parse required, optional, conditional params
+        parse success and err responses:
+        #responses are json
+            for each response:
+                for each keyval pair:
+                    key = response key
+                    if val is an object:
+                        parse nested object json
+                    if val is an array:
+                        join all nested object together into one big object 
+                        parse nested object json
+                    else:
+                        val = any | None
+                    
+        maybe also parse sample params for documentation?
+        generate py func from request
+#+end_src
+
+** Method Structure
+#+begin_src python
+class Param:
+    name: str
+    doc: str
+
+class ResponseField:
+    key: str
+    valueType: "data" | "array" | "object"
+    nestedField: ResponseField | None
+
+class Response:
+    fields: list[ResponseField]
+
+class Request:
+    action: str
+    resource: str
+    scope: str
+    version: str
+    permissions: str
+    required: list[Param]
+    optional: list[Param]
+    conditional: list[Param]
+    responses: list[Response]
+#+end_src
+
+* Outputs
+
+** Lib
+A python? library for calling tass
+
+** CLI
+A gam-like tool that uses the tass]lib
+
+*** Syntax
+tasscli <api> <method> <params>
