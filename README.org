@@ -84,7 +84,7 @@ class Request:
 A python? library for calling tass
 
 ** CLI
-A gam-like tool that uses the tass]lib
+A gam-like tool that uses the tass lib
 
 *** Syntax
 tasscli <api> <method> <params>

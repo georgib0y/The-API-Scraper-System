@@ -1,0 +1,124 @@
+diff --git a/getMedicalConfNote.md b/getMedicalConfNote.md
+index e941a73..f52c8a6 100644
+--- a/getMedicalConfNote.md
++++ b/getMedicalConfNote.md
+@@ -48,7 +48,7 @@
+       "note_text": "Andy Confidential General note",
+       "entry_code": "tsloman",
+       "entry_date": "2018-11-01 00:00:00.0",
+-      "attach_id": ""
++      "attach_id": "",
+       "attach_url": "",
+       "__tassversion": "01.053.3.000",
+       "token": {
+diff --git a/getMedicalIllness.md b/getMedicalIllness.md
+index 7cc6556..8adcd7a 100644
+--- a/getMedicalIllness.md
++++ b/getMedicalIllness.md
+@@ -22,13 +22,13 @@
+ 
+    **Required:**
+  
+-    `studcode` [string] - Student Code
++    `studcode [string]` - Student Code
+ 
+-    `ill_date` [date] - Illness Data
++    `ill_date [date]` - Illness Data
+ 
+-    `ill_time` [time] - Illness Time
++    `ill_time [time]` - Illness Time
+ 
+-    `mcond_code` [string] - Medical Condition Code
++    `mcond_code [string]` - Medical Condition Code
+ 
+    **Optional:**
+ 
+diff --git a/getMedicalIllnesses.md b/getMedicalIllnesses.md
+index c334ef4..ccfed40 100644
+--- a/getMedicalIllnesses.md
++++ b/getMedicalIllnesses.md
+@@ -95,7 +95,7 @@
+             }
+           ],
+           "studcode": "0009097"
+-        },
++        }
+       ],
+       "__tassversion": "01.053.3.000",
+       "token": {
+diff --git a/getMedicalNote.md b/getMedicalNote.md
+index c10046c..2b8d8a4 100644
+--- a/getMedicalNote.md
++++ b/getMedicalNote.md
+@@ -56,7 +56,7 @@
+         "timestamp": "{ts '2021-01-20 15:08:27'}",
+         "studcode": "0009130",
+         "note_cat": "GEN"
+-      },
++      }
+     }
+     ```
+  
+diff --git a/getMedicalPractitioner.md b/getMedicalPractitioner.md
+index 6a57ab7..edc669d 100644
+--- a/getMedicalPractitioner.md
++++ b/getMedicalPractitioner.md
+@@ -42,12 +42,11 @@
+       "doct_phone": "3020 7900",
+       "doct_name": "Dr Mary Jane Bellingham",
+       "ptype_desc": "Doctor",
+-      "prac_num": 9
++      "prac_num": 9,
+       "__tassversion": "01.053.3.000",
+       "token": {
+         "timestamp": "{ts '2021-01-20 16:21:20'}",
+-        "studcode": "0009130",
+-        "prac_num": 9
++        "studcode": "0009130"
+       }
+     }
+     ```
+diff --git a/getMedicalSupplementary.md b/getMedicalSupplementary.md
+index afa7c97..7a91869 100644
+--- a/getMedicalSupplementary.md
++++ b/getMedicalSupplementary.md
+@@ -22,9 +22,9 @@
+ 
+    **Required:**
+  
+-    `studcode` [string] - Student Code
++    `studcode [string]` - Student Code
+     
+-    `msupp_code` [string] - Medical Supplementary Code
++    `msupp_code [string]` - Medical Supplementary Code
+ 
+    **Optional:**
+ 
+diff --git a/getStudentUDSetup.md b/getStudentUDSetup.md
+index 42605fa..9ebbd51 100644
+--- a/getStudentUDSetup.md
++++ b/getStudentUDSetup.md
+@@ -49,7 +49,6 @@
+                "desc":"Repeat Year",
+                "name":"UD1_DESC"
+             },
+-            {UD[2-9]_DESC},
+             { 
+                "flag_name":"UD10_DESC",
+                "id":10,
+@@ -78,7 +77,6 @@
+                "desc":"Campus",
+                "name":"UD11_DESC"
+             },
+-            {UD[12-19]_DESC},
+             { 
+                "flag_name":"UD20_DESC",
+                "id":20,
+@@ -99,7 +97,6 @@
+                "desc":"Visa Number/Date",
+                "name":"UD21_DESC"
+             },
+-            {UD[22-24]_DESC},
+             { 
+                "flag_name":"UD25_DESC",
+                "id":25,
