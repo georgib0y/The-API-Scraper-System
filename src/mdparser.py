@@ -1,14 +1,10 @@
-from typing import Literal, Optional, Tuple
+from typing import Literal, Optional
 import logging
 import json
 import re
-import os
-
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-
-REPO_PATH = "patched_repos"
 
 header_re = r"\* +\*\*"
 empty_line_re = r"\n\s*\n"
@@ -105,8 +101,7 @@ def union_response(r1: Response, r2: Response) -> Response:
 
 
 class Request:
-    action: str
-    resource: str
+    name: str
     doc: str
     scope: str
     version: int
@@ -118,8 +113,7 @@ class Request:
 
     def into_dict(self) -> dict:
         return {
-            "action": self.action,
-            "resource": self.resource,
+            "name": self.name,
             "doc": self.doc,
             "scope": self.scope,
             "version": self.version,
@@ -131,23 +125,9 @@ class Request:
         }
 
     
-def parse_request_name(s: str) -> Tuple[str, str]:
+def parse_request_name(s: str) -> str:
     s = s.replace("*", "")
-
-    cap_idx = None
-    for idx, c in enumerate(s):
-        if c.isupper():
-            cap_idx = idx
-            break
-    if cap_idx is None:
-        raise ParseError("could not parse req name (no capital): {}", s)
-
-    action = s[:cap_idx]
-    resource = s[cap_idx:]
-    if len(action) == 0 or len(resource) == 0:
-        raise ParseError("could not parse req name: {}", s)
-    
-    return action, resource
+    return s.strip()
 
 
 def parse_version(s: str) -> int:
@@ -156,6 +136,30 @@ def parse_version(s: str) -> int:
 
     return 3
 
+
+# expects the type value including the square brackets
+def parse_param_type(s: str) -> str:
+    if len(s) < 2 or s[0] != "[" or s[-1] != "]":
+        raise ParseError("expected type to be '[type]': '{}'", s)
+
+    match s[1:-1]:
+        case "boolean":
+            return "bool"
+        case "date":
+            return "date"
+        case "number":
+            return "int"
+        case "num":
+            return "int"
+        case "string":
+            return "str"
+        case "time": 
+            return "time" # datetime.time
+        case "timestamp yyyy-MM-dd HH:mm:ss.SSS":
+            return "datetime" # datetime.datetime
+        case _:
+            raise ParseError("unknown type: {}", s)
+        
 
 def parse_param_line(s: str, presence: str) -> Parameter:
     param = Parameter()
@@ -182,9 +186,7 @@ def parse_param_line(s: str, presence: str) -> Parameter:
 
     name, match, type = defin.partition(" ")
     if match != "":
-        if len(type) < 2 or type[0] != "[" or type[-1] != "]":
-            raise ParseError("expected definition to be 'name [type]': '{}'", s)
-        param.type = type[1:-1]
+        param.type = parse_param_type(type)
     else:
         param.type = ""
         
@@ -312,12 +314,12 @@ def parse_error_response(s: str) -> Response:
 def parse_request(text: str, api_scope: str) -> Request:
     req = Request()
     req.scope = api_scope
-    name, match, text = text.partition("----")
+    title, match, text = text.partition("----")
     if match == "":
         raise ParseError("could not find title line")
 
     logger.debug("parsing req name")
-    req.action, req.resource = parse_request_name(name.strip())
+    req.name = parse_request_name(title)
 
     logger.debug("parsing req doc")
     split = re.split(header_re, text)
@@ -369,25 +371,4 @@ def parse_request(text: str, api_scope: str) -> Request:
     return req
 
 
-def main():
-    for dirpath, _, filenames in os.walk(REPO_PATH):
-        # skip versioned api calls, only concerned with v3 calls atm
-        if "version" in dirpath: continue
 
-        for filename in filenames:
-            if filename == "README.md": continue
-            if not filename.endswith(".md"): continue
-
-            path = os.path.join(dirpath, filename)
-            with open(path) as file:
-                text = file.read()
-
-            logger.info(f"parsing file: {text}")
-            scope = os.path.basename(dirpath)
-            res = parse_request(text, scope)
-            print(json.dumps(res.into_dict(), indent=2))
-            print()
-
-    
-if __name__ ==  "__main__":
-    main()
