@@ -1,7 +1,8 @@
-from typing import TextIO, TypeVar, Generic
+from typing import TypeVar, Generic
 from abc import ABC, abstractmethod
 
-Res = TypeVar("Res") # Response Type
+Res = TypeVar("Res")  # Response Type
+
 
 class TassRequest(Generic[Res], ABC):
     @abstractmethod
@@ -12,9 +13,11 @@ class TassRequest(Generic[Res], ABC):
 class TassConnection:
     def send(self, request: TassRequest[Res]) -> Res:
         ...
-    
+
+
 class StudentDetailsResponse():
     ...
+
 
 class StudentDetailsRequest(TassRequest):
     ...

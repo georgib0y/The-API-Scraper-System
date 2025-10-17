@@ -1,0 +1,149 @@
+diff --git a/getIsInvoicePaid.md b/getIsInvoicePaid.md
+index c9275af..6a97568 100644
+--- a/getIsInvoicePaid.md
++++ b/getIsInvoicePaid.md
+@@ -27,17 +27,6 @@ Returns a structure with one property to indicate if the specified invoice for t
+ 	none
+ 
+ * **Success Response:**
+-		
+-	ColdFusion 2011
+-	```javascript
+-	"invoice_paid": "Yes"
+-	```
+-
+-	ColdFusion 2016
+-	```javascript
+-	"invoice_paid": true
+-	```
+-
+ 	ColdFusion 2018
+ 	```javascript
+ 	{
+diff --git a/getSuppliers.md b/getSuppliers.md
+index bd9f1f8..a82065f 100644
+--- a/getSuppliers.md
++++ b/getSuppliers.md
+@@ -36,61 +36,51 @@
+     {
+       "suppliers": [
+         {
+-          // Default GL Distribution Account 1
+           "acct1_percent": 100,
+           "usual_acct_code": "01-2270-00-00",
+           "usual_acct_desc1": "Water, Sewerage & Council Charges",
+           "usual_acct_taxcode1": "AO",
+           
+-          // Default GL Distribution Account 2
+           "acct2_percent": "",
+           "usual_acct_code2": "",
+           "usual_acct_desc2": "",
+           "usual_acct_taxcode2": "",
+           
+-          // Default GL Distribution Account 3
+           "acct3_percent": "",
+           "usual_acct_code3": "",
+           "usual_acct_desc3": "",
+           "usual_acct_taxcode3": "",
+           
+-          // Default GL Distribution Account 4
+           "acct4_percent": "",
+           "usual_acct_code4": "",
+           "usual_acct_desc4": "",
+           "usual_acct_taxcode4": "",
+           
+-          // Default GL Distribution Account 5
+           "acct5_percent": "",
+           "usual_acct_code5": "",
+           "usual_acct_desc5": "",
+           "usual_acct_taxcode5": "",
+           
+-          // Default GL Distribution Account 6
+           "acct6_percent": "",
+           "usual_acct_code6": "",
+           "usual_acct_desc6": "",
+           "usual_acct_taxcode6": "",
+           
+-          // Default GL Distribution Account 7
+           "acct7_percent": "",
+           "usual_acct_code7": "",
+           "usual_acct_desc7": "",
+           "usual_acct_taxcode7": "",
+           
+-          // Default GL Distribution Account 8
+           "acct8_percent": "",
+           "usual_acct_code8": "",
+           "usual_acct_desc8": "",
+           "usual_acct_taxcode8": "",
+           
+-          // Default GL Distribution Account 9
+           "acct9_percent": "",
+           "usual_acct_code9": "",
+           "usual_acct_desc9": "",
+           "usual_acct_taxcode9": "",
+           
+-          // Total percentage of Default GL Distribution Accounts (<= 100)
+           "acct_percent_total": 100,
+           
+           "contact_text": "John Adam",
+diff --git a/getTaxCodes.md b/getTaxCodes.md
+index 5079080..4f013f9 100644
+--- a/getTaxCodes.md
++++ b/getTaxCodes.md
+@@ -19,7 +19,6 @@
+    **Optional:**
+ 
+    `includeall [boolean]` - If `true` return all Tax Codes.
+-   
+    If not defined or `false` return Tax Codes that are enabled for BAS as per the TASS.web program Finance > General Ledger > BAS Processing > GST Setups (Tab) > G10 & G11
+ 
+    **Conditional:**
+diff --git a/setGLCredit.md b/setGLCredit.md
+index 63c4c6b..1de3884 100644
+--- a/setGLCredit.md
++++ b/setGLCredit.md
+@@ -29,7 +29,6 @@
+  `comment_1 [string]` - Comment 1
+ 
+  `gldistributions [array]` - Array of GL Distributions
+-
+  for each gldistributions these fields are required
+ 
+ `id [string]` - Unique Identity of GL Distribution
+@@ -48,7 +47,7 @@
+ 
+ `year [integer]` - Year
+ 
+-`period [interger]` - Period
++`period [integer]` - Period
+ 
+ `comment_2 [string]` - Comment 2
+ 
+diff --git a/setPOInvoice.md b/setPOInvoice.md
+index 58a24a5..e64aadb 100644
+--- a/setPOInvoice.md
++++ b/setPOInvoice.md
+@@ -27,15 +27,10 @@
+    `invoice_amount [decimal]` - Invoice Amount
+ 
+    `polines [array]` - Array of PO Lines
+-   
+                for each poline these fields are required:
+-
+                    `id [string]` - Unique identity of PO line
+-
+                    `ponum [number]` - PO Number of PO Line
+-
+                    `linenum [number]` - Line Number of PO Line
+-
+                    `quantity [decimal]` - Quantity of PO Line
+ 
+ 
+@@ -293,6 +288,7 @@
+     __invalid: {
+       "quantity": "Quantity exceeds Outstanding Quantity."
+     }
++	```
+ 
+     `attachment_file_name` not supplied where `attachment_file` is supplied
+     ```javascript
